@@ -20,9 +20,9 @@ namespace TraficLight.Controllers
         }
 
         [HttpPost, Route("/observation/add")]
-        public ActionResult<Answer> Add([FromBody]Request criteria)
+        public ActionResult<Answer> Add([FromBody]Request request)
         {
-            return new Answer();
+            return _repo.Add(request);
         }
 
         [HttpGet, Route("clear")]
