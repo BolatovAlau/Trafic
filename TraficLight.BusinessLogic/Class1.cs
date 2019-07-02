@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TraficLight.BusinessLogic
 {
-    public class ClockFace
+    public static class ClockFace
     {
         public static Dictionary<byte, byte> numbers = new Dictionary<byte, byte>
         {
@@ -19,12 +19,7 @@ namespace TraficLight.BusinessLogic
             { 9, 0b111_1011 }
         };
 
-        public static void IsInside(int[] baseNums, int index)
-        {
-
-        }
-
-        public NumsAndBroken GetNums(byte first, byte second)
+        public static NumsAndBroken GetNums(byte first, byte second, byte deep = 0, int[] baseNums = null)
         {
             var tempNumbers = new List<int>();
 
@@ -56,7 +51,20 @@ namespace TraficLight.BusinessLogic
             {
                 foreach (var secondNum in tempSecondNumbers)
                 {
-                    tempNumbers.Add(firstNum * 10 + secondNum);
+                    if (deep != 0)
+                    {
+                        foreach (var baseNum in baseNums)
+                        {
+                            if (firstNum * 10 + secondNum + deep == baseNum)
+                            {
+                                tempNumbers.Add(baseNum);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        tempNumbers.Add(firstNum * 10 + secondNum);
+                    }
                 }
             }
 
