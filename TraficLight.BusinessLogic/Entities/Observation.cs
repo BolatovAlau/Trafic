@@ -12,7 +12,7 @@ namespace TraficLight.BusinessLogic.Entities
         public string Color { get; set; }
         public string NumberOne { get; set; }
         public string NumberTwo { get; set; }
-        public Guid SequenceId { get; set; }
+        public string SequenceId { get; set; }
 
         public virtual Sequence Sequence { get; set; }
     }

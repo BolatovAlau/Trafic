@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using TraficLight.BusinessLogic;
 
 namespace TraficLight.Controllers
@@ -13,22 +14,22 @@ namespace TraficLight.Controllers
             _repo = repo;
         }
 
-        [HttpPost, Route("/sequence/create")]
-        public ActionResult<Answer> Create()
+        [HttpPost, Route("sequence/create")]
+        public async Task<Answer> Create()
         {
-            return _repo.Create();
+            return await _repo.Create();
         }
 
-        [HttpPost, Route("/observation/add")]
-        public ActionResult<Answer> Add([FromBody]Request request)
+        [HttpPost, Route("observation/add")]
+        public async Task<Answer> Add([FromBody]Request request)
         {
-            return _repo.Add(request);
+            return await _repo.Add(request);
         }
 
         [HttpGet, Route("clear")]
-        public ActionResult<Answer> Clear()
+        public async Task<Answer> Clear()
         {
-            return _repo.Clear();
+            return await _repo.Clear();
         }
     }
 }

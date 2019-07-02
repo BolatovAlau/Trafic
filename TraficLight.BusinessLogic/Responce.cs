@@ -14,6 +14,6 @@ namespace TraficLight.BusinessLogic
     {
         public int[] Start { get; set; }
         public string[] Missing { get; set; }
-        public Guid Sequence { get; set; }
+        public string Sequence { get; set; }
     }
 }

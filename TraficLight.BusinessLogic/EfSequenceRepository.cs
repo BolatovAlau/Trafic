@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using TraficLight.BusinessLogic.Entities;
 
 namespace TraficLight.BusinessLogic
@@ -14,13 +16,13 @@ namespace TraficLight.BusinessLogic
         {
             db = new TraficContext(options);
         }
-        public Answer Create()
+        public async Task<Answer> Create()
         {
             try
             {
-                var guid = Guid.NewGuid();
-                db.Sequences.Add(new Sequence { Id = guid });
-                db.SaveChanges();
+                var guid = Guid.NewGuid().ToString();
+                await db.Sequences.AddAsync(new Sequence { Id = guid });
+                await db.SaveChangesAsync();
 
                 return new Answer
                 {
@@ -38,18 +40,42 @@ namespace TraficLight.BusinessLogic
             }
         }
 
-        public Answer Add(Request request)
+        public async Task<Answer> Add(Request request)
         {
             try
             {
-                db.RemoveRange(db.Sequences);
-                db.SaveChanges();
+                if (string.IsNullOrEmpty(request.Sequence) || request.Observation == null
+                    || string.IsNullOrEmpty(request.Observation.Color)
+                    || !(request.Observation.Color == "green" || request.Observation.Color == "red"))
+                    throw new Exception("No solutions found");
 
-                return new Answer
+                var sequense = await db.Sequences.FirstOrDefaultAsync(x => x.Id == request.Sequence); // try to find sequence
+
+                if (sequense == null)
+                    throw new Exception("The sequence isn't found");
+
+                if (request.Observation.Color == "green")
                 {
-                    Status = "ok",
-                    Responce = "ok"
-                };
+
+                }
+                else
+                {
+                    if (!sequense.IsNotFirst)
+                        throw new Exception("There isn't enough data");
+                    else
+                    {
+                        return new Answer
+                        {
+                            Status = "ok",
+                            Responce = new Responce
+                            {
+                                //Start = sequense.Start,
+                                //Missing = sequense.Missing
+                            }
+                        };
+                    }
+                }
+                return null;
             }
             catch (Exception exe)
             {
@@ -61,12 +87,12 @@ namespace TraficLight.BusinessLogic
             }
         }
 
-        public Answer Clear()
+        public async Task<Answer> Clear()
         {
             try
             {
                 db.RemoveRange(db.Sequences);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 return new Answer
                 {

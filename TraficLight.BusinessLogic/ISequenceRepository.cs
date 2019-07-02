@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace TraficLight.BusinessLogic
 {
     public interface ISequenceRepository : IDisposable
     {
-        Answer Create();
-        Answer Add(Request request);
-        Answer Clear();
+        Task<Answer> Create();
+        Task<Answer> Add(Request request);
+        Task<Answer> Clear();
     }
 }

@@ -19,23 +19,60 @@ namespace TraficLight.BusinessLogic
             { 9, 0b111_1011 }
         };
 
-        //public static Response IsInside(Request request)
-        //{
-        //    if (request.Color == "green")
-        //    {
-        //        byte first = request.Numbers[0];
-        //        byte second = request.Numbers[1];
+        public static void IsInside(int[] baseNums, int index)
+        {
 
-        //        var tempStart = new List<byte>();
+        }
 
-        //        foreach (var temp in numbers)
-        //        {
-        //            if ((temp.Value & first) == first)
-        //            {
-        //                //tempStart.Add(temp.Key);
-        //            }
-        //        }
-        //    }
-        //}
+        public NumsAndBroken GetNums(byte first, byte second)
+        {
+            var tempNumbers = new List<int>();
+
+            var tempFirstNumbers = new List<int>();
+            var tempSecondNumbers = new List<int>();
+
+            int brokenFirst = 0b111_1111;
+            int brokenSecond = 0b111_1111;
+
+            foreach (var number in numbers)
+            {
+                if ((number.Value & first) == first)
+                {
+                    tempFirstNumbers.Add(number.Key);
+                    brokenFirst = brokenFirst & number.Value;
+                }
+
+                if ((number.Value & second) == second)
+                {
+                    tempSecondNumbers.Add(number.Key);
+                    brokenSecond = brokenSecond & number.Value;
+                }
+            }
+
+            brokenFirst = brokenFirst - first;
+            brokenSecond = brokenSecond - second;
+
+            foreach (var firstNum in tempFirstNumbers)
+            {
+                foreach (var secondNum in tempSecondNumbers)
+                {
+                    tempNumbers.Add(firstNum * 10 + secondNum);
+                }
+            }
+
+            return new NumsAndBroken
+            {
+                BrokenFirst = brokenFirst,
+                BrokenSecond = brokenSecond,
+                Nums = tempNumbers
+            };
+        }
+    }
+
+    public class NumsAndBroken
+    {
+        public List<int> Nums { get; set; }
+        public int BrokenFirst { get; set; }
+        public int BrokenSecond { get; set; }
     }
 }

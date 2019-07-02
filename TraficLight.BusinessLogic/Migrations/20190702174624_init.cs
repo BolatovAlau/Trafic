@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TraficLight.BusinessLogic.Migrations
 {
-    public partial class addInit : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +10,10 @@ namespace TraficLight.BusinessLogic.Migrations
                 name: "Sequences",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    Start = table.Column<string>(nullable: true),
+                    Missing = table.Column<string>(nullable: true),
+                    IsNotFirst = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,7 +29,7 @@ namespace TraficLight.BusinessLogic.Migrations
                     Color = table.Column<string>(nullable: true),
                     NumberOne = table.Column<string>(nullable: true),
                     NumberTwo = table.Column<string>(nullable: true),
-                    SequenceId = table.Column<Guid>(nullable: false)
+                    SequenceId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

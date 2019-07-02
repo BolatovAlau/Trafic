@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace TraficLight.BusinessLogic
 {
@@ -70,15 +69,6 @@ namespace TraficLight.BusinessLogic
             }
 
             Console.Read();
-        }
-        static bool IsInsideBit(byte b, byte pos)
-        {
-            if ((b & pos) == pos)
-            {
-                Console.WriteLine(Convert.ToString(b, 2).PadLeft(7, '0') + " " + Convert.ToString(b - pos, 2).PadLeft(7, '0') + " " + Convert.ToString(pos, 2).PadLeft(7, '0'));
-            }
-
-            return (b & pos) == pos;
         }
     }
 }
