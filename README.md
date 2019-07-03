@@ -34,6 +34,7 @@ http://localhost:xxxx/clear // HttpGet, Очистка базы
 | Sqlite | https://www.sqlite.org/ |
 | Json.NET | https://www.newtonsoft.com/json |
 | NUnit | https://nunit.org/ |
+| Moq | https://github.com/moq/moq4 |
 
 ##  Оптимизация
 
