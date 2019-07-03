@@ -8,7 +8,7 @@ namespace TraficLight.BusinessLogic
 {
     public static class ClockFace
     {
-        public static Dictionary<byte, byte> numbers = new Dictionary<byte, byte>
+        public static Dictionary<int, int> numbers = new Dictionary<int, int>
         {
             { 0, 0b111_0111 },
             { 1, 0b001_0010 },
@@ -133,6 +133,12 @@ namespace TraficLight.BusinessLogic
             return result;
         }
 
+        /// <summary>
+        /// Ломатель датчиков
+        /// </summary>
+        /// <param name="num">Цифра для ломки</param>
+        /// <param name="list">Индексы датчиков</param>
+        /// <returns></returns>
         public static int Broke(int num, params int[] list) // Ломаем палки (для теста)
         {
             int all = 0b111_1111;
@@ -143,11 +149,45 @@ namespace TraficLight.BusinessLogic
             return num & all;
         }
 
+        /// <summary>
+        /// Если число уже найдено, то зачем тратить время?
+        /// </summary>
+        /// <param name="sequence">Готовые данные</param>
+        /// <param name="first">Первый паттерн числа</param>
+        /// <param name="second">Второй паттерн числа</param>
+        /// <returns></returns>
+        public static Sequence Validate(Sequence sequence, int first, int second)
+        {
+            var numToTest = sequence.StartNum - sequence.CurentDeep;
+
+            if (numToTest < 1)
+                throw new Exception("There isn't enough data");
+
+            int firstNumber = Convert.ToInt16(Math.Floor((double)numToTest / 10));
+            int secondNumber = numToTest - firstNumber * 10;
+
+            if ((numbers[firstNumber] & first) == first && (numbers[secondNumber] & second) == second) // Если найден паттерн по второму числу
+            {
+                sequence.CurentDeep++;
+                return sequence;
+            }
+            else
+                throw new Exception("No solutions found");
+        }
+
+        /// <summary>
+        /// Обновляем данные
+        /// </summary>
+        /// <param name="sequence">Текущие данные</param>
+        /// <param name="first">Первый паттерн числа</param>
+        /// <param name="second">Второй паттерн числа</param>
+        /// <param name="isRed">Красное?</param>
+        /// <returns></returns>
         public static Sequence Update(Sequence sequence, int first, int second, bool isRed = false)
         {
-            if (sequence.StartNum > 0)
+            if (!isRed && sequence.StartNum > 0) // Если число уже найдено то просто проходит валидацию
             {
-                return sequence;
+                return Validate(sequence, first, second);
             }
 
             List<NumInfo> starts = null;
@@ -179,22 +219,19 @@ namespace TraficLight.BusinessLogic
 
                 if (lasts.Count() == 0)
                     throw new Exception("The red observation should be the last");
-                else if (lasts.Count() == 1)
-                {
-                    sequence.Broken = false;
-                    sequence.IsNotFirst = false;
-                    sequence.Start = JsonConvert.SerializeObject(lasts);
-                    sequence.StartNum = lasts.First().Start;
-                    sequence.FirstMissing = lasts.First().FirstMissing;
-                    sequence.SecondMissing = lasts.First().SecondMissing;
-                    sequence.CurentDeep = 0;
-                }
                 else
                 {
                     sequence.Broken = false;
                     sequence.CurentDeep = 0;
                     sequence.IsNotFirst = false;
                     sequence.Start = JsonConvert.SerializeObject(lasts);
+
+                    if (lasts.Count() == 1)
+                    {
+                        sequence.StartNum = lasts.First().Start;
+                        sequence.FirstMissing = lasts.First().FirstMissing;
+                        sequence.SecondMissing = lasts.First().SecondMissing;
+                    }
                 }
             }
 

@@ -89,8 +89,8 @@ namespace Tests
             for (int i = 99; i > 0; i--)
                 nums.Add(i);
 
-            int[] brokenFirstNums = { 0, 3, 4 }; // 76 (1001100)
-            int[] brokenSecondNums = { 2, 5, 6 }; // 19 (0011001)
+            int[] brokenFirstNums = { 0, 2, 3, 4 }; // 92 (1011100)
+            int[] brokenSecondNums = { 1, 2, 5, 6 }; // 51 (0110011)
 
             for (int i = 0; i < nums.Count; i++)
             {
@@ -107,8 +107,8 @@ namespace Tests
             }
 
             Assert.IsTrue(sequenceInMemory[0].StartNum == 99);
-            Assert.IsTrue(sequenceInMemory[0].FirstMissing == 76);
-            Assert.IsTrue(sequenceInMemory[0].SecondMissing == 19);
+            Assert.IsTrue(sequenceInMemory[0].FirstMissing == 92);
+            Assert.IsTrue(sequenceInMemory[0].SecondMissing == 51);
         }
 
         [Test]
