@@ -1,4 +1,4 @@
-﻿# Тестовое задание, Цифровой Светофор 
+﻿# Тестовое задание, Цифровой Светофор [Задание](https://github.com/BolatovAlau/Trafic/blob/master/TraficLight/%D0%A2%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D0%BE%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%A6%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%BE%D0%B9%20%D0%A1%D0%B2%D0%B5%D1%82%D0%BE%D1%84%D0%BE%D1%80%20(b).pdf)
 
 Цифровой светофор ­ светофор, оснащенный индикатором цвета и циферблатом. 
 
@@ -8,7 +8,7 @@
 > Сборка -> Пересобрать решения
 
 Чтобы запустить тесты
-> Тест -> Отладка -> Все тесты (Ctrl+l, Ctrl+A)
+> Тест -> Отладка -> Все тесты (Ctrl+L, Ctrl+A)
 
 ## Запросы
 
@@ -33,10 +33,6 @@ http://localhost:xxxx/clear // HttpGet, Очистка базы
 | Sqlite | https://www.sqlite.org/ |
 | Json.NET | https://www.newtonsoft.com/json |
 | NUnit | https://nunit.org/ |
-
-## Как это работает
-
-[Задание](https://github.com/BolatovAlau/Trafic/blob/master/TraficLight/%D0%A2%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D0%BE%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%A6%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%BE%D0%B9%20%D0%A1%D0%B2%D0%B5%D1%82%D0%BE%D1%84%D0%BE%D1%80%20(b).pdf)
 
 Назавем горящих секциях на циферблате просто палками для упращения.
 
