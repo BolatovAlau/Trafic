@@ -26,7 +26,7 @@ http://localhost:xxxx/clear // HttpGet, Очистка базы
 Ответ: {'status':'ok','response':'ok'}
 ```
 
-## Библиотки
+## Библиотеки
 
 | Plugin | LINK |
 | ------ | ------ |
