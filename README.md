@@ -4,10 +4,8 @@
 
 ## Установка
 
-Можете склонировать репозиторий или загрузить файл
-После, для того чтобы установить библиотеки
+Можете склонировать репозиторий или загрузить файл. После, для того чтобы установить библиотеки
 > Сборка -> Пересобрать решения
-
 
 ## Запросы
 
@@ -25,10 +23,17 @@ http://localhost:xxxx/clear // HttpGet, Очистка базы
 Ответ: {'status':'ok','response':'ok'}
 ```
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## Библиотки
 
-Please make sure to update tests as appropriate.
+| Plugin | LINK |
+| ------ | ------ |
+| Sqlite | https://www.sqlite.org/ |
+| Json.NET | https://www.newtonsoft.com/json |
+| NUnit | https://nunit.org/ |
+
+## Как это работает
+
+
 
 ## Лицензия
 [MIT](https://choosealicense.com/licenses/mit/)
