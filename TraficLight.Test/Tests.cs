@@ -145,7 +145,7 @@ namespace Tests
         }
 
         [Test]
-        public void NotFoundStartButFoundErrors() // Как в примере на задаче
+        public void NotFoundStartButFoundErrors() // Как в примере на задаче (1000010)
         {
             library.Clear();
             library.Create();
@@ -171,7 +171,7 @@ namespace Tests
                     break;
             }
 
-            Assert.AreEqual(sequenceInMemory[0].SecondMissing, 64);
+            Assert.AreEqual(sequenceInMemory[0].SecondMissing, 66);
         }
 
         [Test]

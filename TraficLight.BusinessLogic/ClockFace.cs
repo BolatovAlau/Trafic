@@ -66,6 +66,9 @@ namespace TraficLight.BusinessLogic
                 }
             }
 
+            int baseFirstBroken = 127;
+            int baseSecondBroken = 127;
+
             foreach (var firstNum in tempFirstNumbers)
             {
                 foreach (var secondNum in tempSecondNumbers)
@@ -82,6 +85,8 @@ namespace TraficLight.BusinessLogic
                                     FirstMissing = baseNum.FirstMissing | firstNum.Value,
                                     SecondMissing = baseNum.SecondMissing | secondNum.Value
                                 });
+                                baseFirstBroken = baseFirstBroken & (baseNum.FirstMissing | firstNum.Value);
+                                baseSecondBroken = baseSecondBroken & (baseNum.SecondMissing | secondNum.Value);
                             }
                         }
                     }
@@ -93,6 +98,9 @@ namespace TraficLight.BusinessLogic
                             FirstMissing = firstNum.Value,
                             SecondMissing = secondNum.Value
                         });
+
+                        baseFirstBroken = baseFirstBroken & firstNum.Value;
+                        baseSecondBroken = baseSecondBroken & secondNum.Value;
                     }
                 }
             }
@@ -118,8 +126,8 @@ namespace TraficLight.BusinessLogic
             }
             else
             {
-                result.FirstMissing = !firstFound ? firstMis | firstBroken : 0;
-                result.SecondMissing = !secondFound ? secondMis | secondBroken : 0;
+                result.FirstMissing = !firstFound ? firstMis | baseFirstBroken : 0;
+                result.SecondMissing = !secondFound ? secondMis | baseSecondBroken : 0;
             }
 
             return result;
@@ -137,6 +145,11 @@ namespace TraficLight.BusinessLogic
 
         public static Sequence Update(Sequence sequence, int first, int second, bool isRed = false)
         {
+            if (sequence.StartNum > 0)
+            {
+                return sequence;
+            }
+
             List<NumInfo> starts = null;
 
             if (!string.IsNullOrEmpty(sequence.Start))
