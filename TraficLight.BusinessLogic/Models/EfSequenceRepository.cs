@@ -2,11 +2,11 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using TraficLight.BusinessLogic.Entities;
+using Newtonsoft.Json;
 
-namespace TraficLight.BusinessLogic
+namespace TraficLight.BusinessLogic.Models
 {
     public class EfSequenceRepository : ISequenceRepository
     {
@@ -16,6 +16,7 @@ namespace TraficLight.BusinessLogic
         {
             db = new TraficContext(options);
         }
+
         public async Task<Answer> Create()
         {
             try
@@ -54,28 +55,34 @@ namespace TraficLight.BusinessLogic
                 if (sequense == null)
                     throw new Exception("The sequence isn't found");
 
+
+                if (request.Observation.Color == "red")
+                {
+                    sequense = ClockFace.Update(sequense, 0, 0, true);
+                }
+
                 if (request.Observation.Color == "green")
                 {
+                    sequense = ClockFace.Update(sequense,
+                        Convert.ToInt32(request.Observation.Numbers[0], 2),
+                        Convert.ToInt32(request.Observation.Numbers[1], 2));
 
+                    if (sequense.Broken)
+                        throw new Exception("No solutions found");
+
+                    db.Entry(sequense).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
                 }
-                else
+
+                return new Answer
                 {
-                    if (!sequense.IsNotFirst)
-                        throw new Exception("There isn't enough data");
-                    else
+                    Status = "ok",
+                    Responce = new Responce
                     {
-                        return new Answer
-                        {
-                            Status = "ok",
-                            Responce = new Responce
-                            {
-                                //Start = sequense.Start,
-                                //Missing = sequense.Missing
-                            }
-                        };
+                        Start = JsonConvert.DeserializeObject<List<NumInfo>>(sequense.Start).Select(x => x.Start).ToArray(),
+                        Missing = new string[] { Convert.ToString(sequense.FirstMissing, 2).PadLeft(7, '0'), Convert.ToString(sequense.SecondMissing, 2).PadLeft(7, '0') }
                     }
-                }
-                return null;
+                };
             }
             catch (Exception exe)
             {
@@ -113,8 +120,7 @@ namespace TraficLight.BusinessLogic
         #region Disposable
         bool _disposed;
 
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
+        public void Dispose() // Из Интернета
         {
             Dispose(true);
             GC.SuppressFinalize(this);

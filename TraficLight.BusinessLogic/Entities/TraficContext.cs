@@ -14,14 +14,6 @@ namespace TraficLight.BusinessLogic.Entities
             optionsBuilder.UseSqlite("Filename=trafic.db");
         }
 
-        public DbSet<Observation> Observations { get; set; }
         public DbSet<Sequence> Sequences { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Sequence>()
-                .HasMany(e => e.Observations)
-                .WithOne(e => e.Sequence)
-                .OnDelete(DeleteBehavior.Cascade);
-        }
     }
 }

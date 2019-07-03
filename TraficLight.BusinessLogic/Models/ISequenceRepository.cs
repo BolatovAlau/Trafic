@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace TraficLight.BusinessLogic
+namespace TraficLight.BusinessLogic.Models
 {
     public interface ISequenceRepository : IDisposable
     {

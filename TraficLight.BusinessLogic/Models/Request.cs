@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TraficLight.BusinessLogic
+namespace TraficLight.BusinessLogic.Models
 {
     public class Request
     {

@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using TraficLight.BusinessLogic;
 using TraficLight.BusinessLogic.Entities;
+using TraficLight.BusinessLogic.Models;
 
 namespace TraficLight
 {

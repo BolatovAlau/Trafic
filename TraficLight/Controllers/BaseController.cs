@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TraficLight.BusinessLogic;
+using TraficLight.BusinessLogic.Models;
 
 namespace TraficLight.Controllers
 {
